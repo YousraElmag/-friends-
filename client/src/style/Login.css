@@ -1,0 +1,45 @@
+.Home{
+   background: #85b9c3;;
+    color: antiquewhite;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+}
+.login{
+    display: block;
+}
+.form{
+    width: 400px;
+}
+.form h3{
+    font-family:'Playwrite GB S';
+}
+form{
+      
+    height: fit-content;
+    width: fit-content;
+    margin: 20px auto;
+}
+form input, select{
+    width: 250px;
+    margin-bottom: 14PX;
+    height: 29px;
+    outline: #85b9c3;
+    border: 2px solid #61dafb;
+    color: #288091;
+    border-radius: 10px;
+    padding-left: 5px;
+    font-size: 15px;
+    font-family: cursive;
+}
+.logo{
+     font-family: "Playwrite GB S", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  
+}
+ form button{ 
+    color: #faebd7;
+    background: #21505e;
+    margin-top: 20px;
+}
