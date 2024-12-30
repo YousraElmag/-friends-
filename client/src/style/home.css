@@ -1,0 +1,160 @@
+``
+/* General styles for the entire page */
+body {
+  font-family: 'Comic Neue', cursive; /* Apply the "funny" font to the entire page */
+  font-size: 16px;
+  line-height: 1.6;
+  transition: font-family 0.3s ease; /* Smooth transition for font changes */
+}
+
+/* General styles for the chat application */
+.chat-app {
+  display: flex;
+  flex-direction: row;
+  width: 700px;
+  height: 600px;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid #f0d8c9;
+  box-shadow: 0 4px 8px rgba(240, 216, 201, 0.5);
+  background-color: #fff8f0;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Styles for the user list */
+.user-list {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  min-width: 200px;
+  background-color: #fdf2e9;
+  padding: 20px;
+  border-right: 1px solid #f0d8c9;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: slideIn 0.5s ease-out 0.2s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Styles for the user list header */
+.user-list h3 {
+  color: #7a5c50;
+  font-size: 1.3rem; /* Slightly increase the font size */
+  font-weight: 600;
+  margin-bottom: 10px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.user-list h3:hover {
+  transform: scale(1.05);
+}
+
+/* Styles for the user list */
+.user-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Styles for the user list items */
+.user-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0d8c9;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-out forwards;
+  cursor: pointer;
+}
+
+.user-list li:nth-child(n + 2) {
+  animation-delay: calc(0.1s * var(--item-index));
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-list li:hover {
+  background-color: #fae3d7;
+  transform: scale(1.02);
+}
+
+/* Styles for the chat area */
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff8f0;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slideInRight 0.5s ease-out 0.2s forwards;
+}
+
+@keyframes slideInRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.logout{}
+.logout button{
+   background: no-repeat;
+    font-size: 25px;
+    font-family: -webkit-body;
+    font-weight: bold;
+}
+button{
+    background-color: none;
+}
+.sent
+{
+ text-align: left;
+    padding: 5px 16px;
+    border-radius: 20px;
+    color: #701fb8;
+    background: #97d08c6e;
+  
+    width: max-content;
+  }
+.received{
+  text-align: left;
+    padding:5px 16px;
+    border-radius: 20px;
+    color: white;
+    background: #b08cd0;
+    width: max-content;
+}
+.sent-message{
+margin-left: 80%;
+}
+.received-message{
+  margin-right: 80%;
+}
+.received-time{
+  
+}
