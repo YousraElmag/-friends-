@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 import jj from "../assets/jj.jpg";
-import "../style/Login.css";
+import "/Users/yousraelmaghraby/frinds/client/src/style/Login.css";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
