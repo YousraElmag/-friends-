@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ChatComponent from "./chat";
-import "/Users/yousraelmaghraby/Friends/client/src/style/home.css";
+import "../style/home.css";
 
 const ChatApp = () => {
   const [users, setUsers] = useState([]);
