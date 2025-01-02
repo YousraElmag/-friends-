@@ -102,6 +102,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
               style={{
                 width: "30px",
                 height: "30px",
+                 margintop: '15px',
                 borderRadius: "50%",
                 marginLeft: msg.senderId === uss._id ? "10px" : "0", // Adjust position for row-reverse
                 marginRight: msg.senderId === uss._id ? "0" : "10px", // Adjust position for row-reverse
