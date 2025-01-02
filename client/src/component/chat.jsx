@@ -62,6 +62,13 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     }
   };
 
+  // Handle "Enter" key press to send message
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
     <div>
       <h2>Chat with {selectedUser.name}</h2>
@@ -122,6 +129,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyDown} // Add the Enter key event handler
           placeholder="Type a message..."
           style={{ width: "80%", padding: "10px" }}
         />
