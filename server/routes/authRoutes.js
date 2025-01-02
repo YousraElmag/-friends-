@@ -11,12 +11,6 @@ import generateTokenAndSetCookie from '../helper/token.js'
 const router = express.Router();
 import cors from "cors";
 
-// router.use(
-//   cors({
-//     credentials: true,
-//     origin: "http://localhost:5173",
-//   })
-// );
 
 router.get("/users", getall);
 router.post("/signup", signup);

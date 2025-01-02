@@ -5,7 +5,7 @@ import  generateTokenAndSetCookie  from "../helper/token.js";
 
 export const signup = async (req, res) => {
   try {
-    const { email, name, password, confirmPassword} = req.body;
+    const { email, name, password, confirmPassword, gender } = req.body;
 
     if (!email || !name || !password || !confirmPassword ) {
       return res.status(400).json({ error: "All fields are required" });
@@ -22,11 +22,16 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+		const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${name}`;
+    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${name}`;
+
 
     const newUser = new User({
       email,
       name,
       password: hashedPassword,
+      gender,
+      image:gender==='male'?boyProfilePic:girlProfilePic,
     });
 
     await newUser.save();
@@ -37,6 +42,7 @@ export const signup = async (req, res) => {
       _id: newUser._id,
       email: newUser.email,
       name: newUser.name,
+      image:newUser.image,
     });
   } catch (error) {
     console.log("Error in signup controller:", error.message);
@@ -60,6 +66,7 @@ export const login = async (req, res) => {
       _id: user._id,
       email: user.email,
       name: user.name,
+      image:user.image,
 
     });
   } catch (error) {
