@@ -33,6 +33,7 @@ body {
   height: 30px;
   border-radius: 50%;
   margin-right: 10px;
+      margin-top: 15px;
 }
 
 /* Styles for the user list */
@@ -156,7 +157,9 @@ button{
     width: max-content;
 }
 .sent-message{
-margin-left: 80%;
+    margin-left: 76%;
+    width: max-content;
+
 }
 .received-message{
   margin-right: 80%;
