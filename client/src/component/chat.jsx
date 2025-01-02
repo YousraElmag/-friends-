@@ -85,21 +85,19 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
               display: "flex",
               alignItems: "flex-start",
               marginBottom: "10px",
+              flexDirection: msg.senderId === uss._id ? "row-reverse" : "row", // For sent messages, image will be on the right
             }}
           >
             {/* Display Sender's Image */}
             <img
-              src={
-                msg.senderId === uss._id
-                  ? uss.image
-                  : selectedUser.image
-              }
+              src={msg.senderId === uss._id ? uss.image : selectedUser.image}
               alt="User Avatar"
               style={{
                 width: "30px",
                 height: "30px",
                 borderRadius: "50%",
-                marginRight: "10px",
+                marginLeft: msg.senderId === uss._id ? "10px" : "0", // Adjust position for row-reverse
+                marginRight: msg.senderId === uss._id ? "0" : "10px", // Adjust position for row-reverse
               }}
             />
             <div>
