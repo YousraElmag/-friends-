@@ -15,8 +15,7 @@ const ChatApp = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('/api/auth/users'
-        );
+        const response = await axios.get("/api/auth/users");
         setUsers(response.data);
       } catch (error) {
         setError("Error fetching users: " + error.message);
@@ -41,14 +40,19 @@ const ChatApp = () => {
       <div className="user-list">
         <h3>User List</h3>
         <ul>
-          {users.map(({ _id, name }) => (
+          {users.map(({ _id, name, image }) => (
             <li
               key={_id}
-              onClick={() => setSelectedUser({ _id, name })}
+              onClick={() => setSelectedUser({ _id, name, image })}
               className={`user-item ${
                 selectedUser && selectedUser._id === _id ? "active" : ""
               }`}
             >
+              <img
+                src={image || "default-image-url.jpg"}
+                alt={name}
+                className="user-avatar"
+              />
               {name || _id}
             </li>
           ))}

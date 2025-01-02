@@ -7,14 +7,14 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
   const [newMessage, setNewMessage] = useState("");
   const uss = JSON.parse(localStorage.getItem("chat-user"));
 
-  const chatContainerRef = useRef(null); 
+  const chatContainerRef = useRef(null);
 
-  
   useEffect(() => {
     const fetchMessages = async () => {
       if (currentUser && selectedUser) {
         try {
-          const response = await axios.get(`/api/chat/messages/${uss._id}/${selectedUser._id}`
+          const response = await axios.get(
+            `/api/chat/messages/${uss._id}/${selectedUser._id}`
           );
           setMessages(response.data);
         } catch (error) {
@@ -26,15 +26,13 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     fetchMessages();
     const intervalId = setInterval(() => {
       fetchMessages();
-    }, 1000); 
+    }, 1000);
 
-   
     return () => {
       clearInterval(intervalId);
     };
   }, [currentUser, selectedUser]);
 
-  
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -42,7 +40,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     }
   }, [messages]);
 
-  
   const sendMessage = async () => {
     if (!newMessage.trim()) {
       console.error("Cannot send an empty message");
@@ -56,14 +53,10 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     try {
-    
-      await axios.post('/api/chat/messages',
-        messageData
-      );
+      await axios.post("/api/chat/messages", messageData);
 
-     
       setMessages((prevMessages) => [...prevMessages, messageData]);
-      setNewMessage(""); 
+      setNewMessage("");
     } catch (error) {
       console.error("Error sending message:", error.message);
     }
@@ -88,17 +81,41 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
             className={
               msg.senderId === uss._id ? "sent-message" : "received-message"
             }
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              marginBottom: "10px",
+            }}
           >
-            <p className={msg.senderId === uss._id ? "sent" : "received"}>
-              {msg.content}
-            </p>
-            <span
-              className={
-                msg.senderId === uss._id ? "sent-time" : "received-time"
+            {/* Display Sender's Image */}
+            <img
+              src={
+                msg.senderId === uss._id
+                  ? uss.image
+                  : selectedUser.image
               }
-            >
-              {msg.createdAt ? format(new Date(msg.createdAt), "hh:mm a") : ""}
-            </span>
+              alt="User Avatar"
+              style={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                marginRight: "10px",
+              }}
+            />
+            <div>
+              <p className={msg.senderId === uss._id ? "sent" : "received"}>
+                {msg.content}
+              </p>
+              <span
+                className={
+                  msg.senderId === uss._id ? "sent-time" : "received-time"
+                }
+              >
+                {msg.createdAt
+                  ? format(new Date(msg.createdAt), "hh:mm a")
+                  : ""}
+              </span>
+            </div>
           </div>
         ))}
       </div>
