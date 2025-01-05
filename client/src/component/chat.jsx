@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client"; 
+import { io } from "socket.io-client";
 import { format } from "date-fns";
 import EmojiPicker from "emoji-picker-react";
 
@@ -9,20 +9,29 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const uss = JSON.parse(localStorage.getItem("chat-user"));
   const chatContainerRef = useRef(null);
-  const socket = useRef(null); 
+  const socket = useRef(null);
 
   useEffect(() => {
+    // Use environment variable for the backend URL
+    const backendUrl =
+      import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
-    socket.current = io("http://localhost:8000");
+    // Connect to the backend server
+    socket.current = io(backendUrl, {
+      path: "/socket.io", // Ensure this matches your backend Socket.io path
+    });
 
-    
+    // Join the current user's room
     if (uss?._id) {
       socket.current.emit("joinRoom", uss._id);
     }
+
+    // Listen for new messages
     socket.current.on("receiveMessage", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
+    // Cleanup on unmount
     return () => {
       socket.current.disconnect();
     };
@@ -66,9 +75,10 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     try {
-   
+      // Send the message to the server
       socket.current.emit("sendMessage", messageData);
 
+      // Add the message to the local state for immediate display
       setMessages((prevMessages) => [...prevMessages, messageData]);
       setNewMessage("");
     } catch (error) {
