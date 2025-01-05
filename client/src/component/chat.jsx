@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import { io } from "socket.io-client"; 
 import { format } from "date-fns";
 import EmojiPicker from "emoji-picker-react";
 
@@ -9,15 +9,34 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const uss = JSON.parse(localStorage.getItem("chat-user"));
   const chatContainerRef = useRef(null);
+  const socket = useRef(null); 
+
+  useEffect(() => {
+
+    socket.current = io("http://localhost:8000");
+
+    
+    if (uss?._id) {
+      socket.current.emit("joinRoom", uss._id);
+    }
+    socket.current.on("receiveMessage", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [uss]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       if (currentUser && selectedUser) {
         try {
-          const response = await axios.get(
+          const response = await fetch(
             `/api/chat/messages/${uss._id}/${selectedUser._id}`
           );
-          setMessages(response.data);
+          const data = await response.json();
+          setMessages(data);
         } catch (error) {
           console.error("Error fetching messages:", error.message);
         }
@@ -25,13 +44,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     fetchMessages();
-    const intervalId = setInterval(() => {
-      fetchMessages();
-    }, 6000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
   }, [currentUser, selectedUser]);
 
   useEffect(() => {
@@ -54,7 +66,8 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     try {
-      await axios.post("/api/chat/messages", messageData);
+   
+      socket.current.emit("sendMessage", messageData);
 
       setMessages((prevMessages) => [...prevMessages, messageData]);
       setNewMessage("");
@@ -136,7 +149,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
             border: "none",
             fontSize: "20px",
             cursor: "pointer",
-           
           }}
         >
           😊
