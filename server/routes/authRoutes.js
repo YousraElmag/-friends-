@@ -26,7 +26,7 @@ router.get("/users", async (req, res) => {
       users = await User.find({
         ...queryFilter,
         _id: { $ne: currentUserId },
-      });
+      }).limit(4);
     } else {
       users = await User.find(queryFilter);
     }
