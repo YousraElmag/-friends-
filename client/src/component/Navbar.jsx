@@ -9,14 +9,13 @@ const Logout = () => {
 
   const handleLogout = async () => {
     setLoading(true);
-    setError(null); // Reset any previous error
+    setError(null);
 
     try {
-      const response = await axios.post("/api/auth/logout"
-      );
+      const response = await axios.post("/api/auth/logout");
       console.log(response.data.message);
       localStorage.removeItem("chat-user");
-      navigate("/login"); 
+      navigate("/login");
     } catch (error) {
       console.error(
         "Error during logout:",
@@ -33,8 +32,7 @@ const Logout = () => {
   };
 
   return (
-    <div className="logout"> 
-     
+    <div className="logout">
       {error && <p style={{ color: "red" }}>{error}</p>}
       <button onClick={handleLogout} disabled={loading}>
         {loading ? "Logging out..." : "Logout🚪"}

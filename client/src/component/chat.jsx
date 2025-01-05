@@ -26,7 +26,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     fetchMessages();
     const intervalId = setInterval(() => {
       fetchMessages();
-    }, 1000);
+    }, 6000);
 
     return () => {
       clearInterval(intervalId);
@@ -62,7 +62,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     }
   };
 
-  // Handle "Enter" key press to send message
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       sendMessage();
@@ -73,13 +72,13 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     <div>
       <h2>Chat with {selectedUser.name}</h2>
       <div
+        className="allchat"
         ref={chatContainerRef}
         style={{
-          height: "300px",
+          height: "421px",
           overflowY: "scroll",
-          border: "1px solid #ddd",
+
           padding: "10px",
-          marginBottom: "10px",
         }}
       >
         {messages.map((msg, index) => (
@@ -92,20 +91,20 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
               display: "flex",
               alignItems: "flex-start",
               marginBottom: "10px",
-              flexDirection: msg.senderId === uss._id ? "row-reverse" : "row", // For sent messages, image will be on the right
+              flexDirection: msg.senderId === uss._id ? "row-reverse" : "row",
             }}
           >
-            {/* Display Sender's Image */}
+            {}
             <img
               src={msg.senderId === uss._id ? uss.image : selectedUser.image}
               alt="User Avatar"
               style={{
                 width: "30px",
                 height: "30px",
-                 margintop: '15px',
+                margintop: "15px",
                 borderRadius: "50%",
-                marginLeft: msg.senderId === uss._id ? "10px" : "0", // Adjust position for row-reverse
-                marginRight: msg.senderId === uss._id ? "0" : "10px", // Adjust position for row-reverse
+                marginLeft: msg.senderId === uss._id ? "10px" : "0",
+                marginRight: msg.senderId === uss._id ? "0" : "10px",
               }}
             />
             <div>
@@ -130,13 +129,20 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          onKeyDown={handleKeyDown} // Add the Enter key event handler
+          onKeyDown={handleKeyDown}
           placeholder="Type a message..."
-          style={{ width: "80%", padding: "10px" }}
+          style={{
+            width: "70%",
+            padding: "10px",
+            outline: "none",
+            border: "navajowhite",
+            color: "black",
+            background: "antiquewhite",
+            fontSize: "18px",
+            fontFamily: "sans-serif",
+          }}
         />
-        <button onClick={sendMessage} style={{ padding: "10px" }}>
-          Send
-        </button>
+        <button onClick={sendMessage}>Send</button>
       </div>
     </div>
   );
