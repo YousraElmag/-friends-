@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client";
+import axios from "axios";
 import { format } from "date-fns";
 import EmojiPicker from "emoji-picker-react";
 
@@ -9,39 +9,15 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const uss = JSON.parse(localStorage.getItem("chat-user"));
   const chatContainerRef = useRef(null);
-  const socket = useRef(null);
-
-  useEffect(() => {
-    // Connect to the backend server using a relative path
-    socket.current = io({
-      path: "/socket.io", // Ensure this matches your backend Socket.io path
-    });
-
-    // Join the current user's room
-    if (uss?._id) {
-      socket.current.emit("joinRoom", uss._id);
-    }
-
-    // Listen for new messages
-    socket.current.on("receiveMessage", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    // Cleanup on unmount
-    return () => {
-      socket.current.disconnect();
-    };
-  }, [uss]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       if (currentUser && selectedUser) {
         try {
-          const response = await fetch(
+          const response = await axios.get(
             `/api/chat/messages/${uss._id}/${selectedUser._id}`
           );
-          const data = await response.json();
-          setMessages(data);
+          setMessages(response.data);
         } catch (error) {
           console.error("Error fetching messages:", error.message);
         }
@@ -49,6 +25,13 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     fetchMessages();
+    const intervalId = setInterval(() => {
+      fetchMessages();
+    }, 6000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [currentUser, selectedUser]);
 
   useEffect(() => {
@@ -71,10 +54,8 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     try {
-      // Send the message to the server
-      socket.current.emit("sendMessage", messageData);
+      await axios.post("/api/chat/messages", messageData);
 
-      // Add the message to the local state for immediate display
       setMessages((prevMessages) => [...prevMessages, messageData]);
       setNewMessage("");
     } catch (error) {
@@ -155,6 +136,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
             border: "none",
             fontSize: "20px",
             cursor: "pointer",
+           
           }}
         >
           😊
