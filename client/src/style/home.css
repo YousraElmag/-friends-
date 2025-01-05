@@ -105,7 +105,10 @@ gap: 20px;
     transform: translateY(0);
   }
 }
-
+.mes{
+  display: flex;
+  gap: 10px;
+}
 .user-list li:hover {
   background-color: #bde0fe;
   transform: scale(1.02);

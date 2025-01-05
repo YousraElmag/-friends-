@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { format } from "date-fns";
+import EmojiPicker from "emoji-picker-react";
 
 const ChatComponent = ({ selectedUser, currentUser }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const uss = JSON.parse(localStorage.getItem("chat-user"));
-
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
@@ -68,6 +69,11 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     }
   };
 
+  const handleEmojiClick = (emojiObject) => {
+    setNewMessage((prevMessage) => prevMessage + emojiObject.emoji);
+    setShowEmojiPicker(false);
+  };
+
   return (
     <div>
       <h2>Chat with {selectedUser.name}</h2>
@@ -77,7 +83,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
         style={{
           height: "421px",
           overflowY: "scroll",
-
           padding: "10px",
         }}
       >
@@ -94,14 +99,13 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
               flexDirection: msg.senderId === uss._id ? "row-reverse" : "row",
             }}
           >
-            {}
             <img
               src={msg.senderId === uss._id ? uss.image : selectedUser.image}
               alt="User Avatar"
               style={{
                 width: "30px",
                 height: "30px",
-                margintop: "15px",
+                marginTop: "15px",
                 borderRadius: "50%",
                 marginLeft: msg.senderId === uss._id ? "10px" : "0",
                 marginRight: msg.senderId === uss._id ? "0" : "10px",
@@ -124,7 +128,24 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
           </div>
         ))}
       </div>
-      <div>
+      <div className="mes">
+        <button
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          style={{
+            background: "antiquewhite",
+            border: "none",
+            fontSize: "20px",
+            cursor: "pointer",
+           
+          }}
+        >
+          😊
+        </button>
+        {showEmojiPicker && (
+          <div style={{ position: "absolute", bottom: "60px", zIndex: "10" }}>
+            <EmojiPicker onEmojiClick={handleEmojiClick} />
+          </div>
+        )}
         <input
           type="text"
           value={newMessage}
