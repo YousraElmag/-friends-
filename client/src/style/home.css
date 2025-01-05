@@ -1,4 +1,4 @@
-`` body {
+ body {
   font-family: "Comic Neue", cursive;
   font-size: 16px;
   line-height: 1.6;
@@ -12,11 +12,11 @@ body {
 .chat-app {
   display: flex;
   flex-direction: row;
-  width: 700px;
+
   height: 600px;
   max-width: 800px;
   margin: 0 auto;
-
+gap: 20px;
   box-shadow: 0 4px 8px rgba(240, 216, 201, 0.5);
   transition: all 0.3s ease;
 
@@ -48,6 +48,7 @@ body {
   animation: slideIn 0.5s ease-out 0.2s forwards;
   box-shadow: 0 0 8px 4px rgba(244, 172, 183, 0.7);
   background: #ffe5ec;
+  width: 400px;
 }
 
 @keyframes slideIn {
@@ -58,11 +59,13 @@ body {
 }
 
 .user-list h3 {
-  color: #7a5c50;
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  transition: color 0.3s ease, transform 0.3s ease;
+    color: #55095a;
+    font-size: x-large;
+    font-weight: 900;
+    margin-bottom: 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-shadow: 2px 2px 4px #6468fffa;
+
 }
 
 .user-list h3:hover {
@@ -107,11 +110,13 @@ body {
   background-color: #bde0fe;
   transform: scale(1.02);
 }
-
+.op{
+  width: 400px;
+}
 .chat-area {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 700px;
   padding: 20px;
   box-sizing: border-box;
   background-color: #e1eff6;
@@ -120,6 +125,8 @@ body {
   transform: translateX(20px);
   animation: slideInRight 0.5s ease-out 0.2s forwards;
   box-sizing: border-box;
+      box-shadow: 0 0 8px 4px rgb(172 244 237 / 70%);
+
 }
 
 @keyframes slideInRight {
@@ -129,12 +136,18 @@ body {
   }
 }
 .logout {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
+
 .logout button {
   background: no-repeat;
   font-size: 25px;
   font-family: -webkit-body;
   font-weight: bold;
+  border:none;
+  text-shadow: 2px 2px 4px #6468fffa;
 }
 button {
   background-color: none;
@@ -153,7 +166,7 @@ button {
   border-radius: 20px;
   color: white;
   background: #b08cd0;
-  width: max-content;
+  width: auto;
 }
 .sent-message {
   margin-left: auto;
@@ -161,6 +174,7 @@ button {
 }
 .received-message {
   margin-right: 80%;
+  width: max-content;
 }
 .received-time {
 }
