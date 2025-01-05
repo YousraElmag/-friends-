@@ -12,12 +12,8 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
   const socket = useRef(null);
 
   useEffect(() => {
-    // Use environment variable for the backend URL
-    const backendUrl =
-      import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
-
-    // Connect to the backend server
-    socket.current = io(backendUrl, {
+    // Connect to the backend server using a relative path
+    socket.current = io({
       path: "/socket.io", // Ensure this matches your backend Socket.io path
     });
 
