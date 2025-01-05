@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
-import jj from "../assets/jj.jpg";
+import jj from "../assets/we.jpg";
 import "../style/Login.css";
 
 const AuthPage = () => {
@@ -95,7 +95,7 @@ const AuthPage = () => {
 
   return (
     <div className="Home">
-      <img src={jj} alt="Background" />
+      <img className="op"  src={jj} alt="Background" />
       <div className="form">
         <span className="logo"> ❤️ Friends ❤️</span>
         <h3>
