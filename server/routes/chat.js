@@ -1,33 +1,21 @@
 import express from "express";
 import Message from "../model/message.js";
-import crypto from "crypto"; 
+import CryptoJS from "crypto-js";
 
 const routerchat = express.Router();
+const ENCRYPTION_SECRET = "your_secret_key"; // Replace with your secure key
 
+// Utility functions for encryption and decryption
+const encryptMessage = (message) => {
+  return CryptoJS.AES.encrypt(message, ENCRYPTION_SECRET).toString();
+};
 
-const encryptionKey = crypto.randomBytes(32); 
-const algorithm = "aes-256-cbc";
+const decryptMessage = (encryptedMessage) => {
+  const bytes = CryptoJS.AES.decrypt(encryptedMessage, ENCRYPTION_SECRET);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
-
-function encrypt(text) {
-  const iv = crypto.randomBytes(16); 
-  const cipher = crypto.createCipheriv(algorithm, encryptionKey, iv);
-  let encrypted = cipher.update(text, "utf8", "hex");
-  encrypted += cipher.final("hex");
-  return `${iv.toString("hex")}:${encrypted}`; 
-}
-
-
-function decrypt(text) {
-  const [ivHex, encrypted] = text.split(":");
-  const iv = Buffer.from(ivHex, "hex");
-  const decipher = crypto.createDecipheriv(algorithm, encryptionKey, iv);
-  let decrypted = decipher.update(encrypted, "hex", "utf8");
-  decrypted += decipher.final("utf8");
-  return decrypted;
-}
-
-
+// Fetch messages
 routerchat.get("/messages/:senderId/:receiverId", async (req, res) => {
   try {
     const { senderId, receiverId } = req.params;
@@ -38,10 +26,10 @@ routerchat.get("/messages/:senderId/:receiverId", async (req, res) => {
       ],
     }).sort({ createdAt: 1 });
 
-   
-    const decryptedMessages = messages.map((msg) => ({
-      ...msg.toObject(),
-      content: decrypt(msg.content),
+    // Decrypt content before sending it to the client
+    const decryptedMessages = messages.map((message) => ({
+      ...message.toObject(),
+      content: decryptMessage(message.content),
     }));
 
     res.status(200).json(decryptedMessages);
@@ -51,7 +39,7 @@ routerchat.get("/messages/:senderId/:receiverId", async (req, res) => {
   }
 });
 
-
+// Send message
 routerchat.post("/messages", async (req, res) => {
   try {
     const { senderId, receiverId, content } = req.body;
@@ -60,7 +48,8 @@ routerchat.post("/messages", async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    const encryptedContent = encrypt(content);
+    // Encrypt the message content before saving
+    const encryptedContent = encryptMessage(content);
 
     const message = new Message({
       senderId,
@@ -69,7 +58,7 @@ routerchat.post("/messages", async (req, res) => {
     });
     await message.save();
 
-    res.status(201).json({ ...message.toObject(), content }); 
+    res.status(201).json(message);
   } catch (error) {
     console.error("Error sending message:", error.message);
     res.status(500).json({ error: "Something went wrong" });
