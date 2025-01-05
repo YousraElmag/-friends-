@@ -3,7 +3,6 @@ import Message from "../model/message.js";
 
 const routerchat = express.Router();
 
-// Fetch messages between two users
 routerchat.get("/messages/:senderId/:receiverId", async (req, res) => {
   try {
     const { senderId, receiverId } = req.params;
@@ -21,7 +20,6 @@ routerchat.get("/messages/:senderId/:receiverId", async (req, res) => {
   }
 });
 
-// Send a message
 routerchat.post("/messages", async (req, res) => {
   try {
     const { senderId, receiverId, content } = req.body;
