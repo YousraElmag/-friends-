@@ -1,13 +1,14 @@
-``
-/* General styles for the entire page */
-body {
-  font-family: 'Comic Neue', cursive; /* Apply the "funny" font to the entire page */
+`` body {
+  font-family: "Comic Neue", cursive;
   font-size: 16px;
   line-height: 1.6;
-  transition: font-family 0.3s ease; /* Smooth transition for font changes */
+  transition: font-family 0.3s ease;
+  box-sizing: border-box;
+}
+body {
+  background: #bde0fe;
 }
 
-/* General styles for the chat application */
 .chat-app {
   display: flex;
   flex-direction: row;
@@ -15,11 +16,10 @@ body {
   height: 600px;
   max-width: 800px;
   margin: 0 auto;
-  border: 1px solid #f0d8c9;
+
   box-shadow: 0 4px 8px rgba(240, 216, 201, 0.5);
-  background-color: #fff8f0;
   transition: all 0.3s ease;
-  opacity: 0;
+
   animation: fadeIn 0.5s ease-out forwards;
 }
 
@@ -32,24 +32,22 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-right: 10px;
-  margin-top: 15px;
+  margin-right: 13px;
+  margin-top: 13px;
+  padding-right: 9px;
 }
 
-/* Styles for the user list */
 .user-list {
   display: flex;
   flex-direction: column;
-  width: 30%;
-  min-width: 200px;
-  background-color: #fdf2e9;
   padding: 20px;
-  border-right: 1px solid #f0d8c9;
   box-sizing: border-box;
   transition: all 0.3s ease;
   transform: translateX(-20px);
   opacity: 0;
   animation: slideIn 0.5s ease-out 0.2s forwards;
+  box-shadow: 0 0 8px 4px rgba(244, 172, 183, 0.7);
+  background: #ffe5ec;
 }
 
 @keyframes slideIn {
@@ -59,10 +57,9 @@ body {
   }
 }
 
-/* Styles for the user list header */
 .user-list h3 {
   color: #7a5c50;
-  font-size: 1.3rem; /* Slightly increase the font size */
+  font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 10px;
   transition: color 0.3s ease, transform 0.3s ease;
@@ -72,16 +69,15 @@ body {
   transform: scale(1.05);
 }
 
-/* Styles for the user list */
 .user-list ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
   flex-grow: 1;
   overflow-y: auto;
+  width: 200px;
 }
 
-/* Styles for the user list items */
 .user-list li {
   padding: 8px 0;
   border-bottom: 1px solid #f0d8c9;
@@ -90,6 +86,10 @@ body {
   transform: translateY(10px);
   animation: fadeInUp 0.5s ease-out forwards;
   cursor: pointer;
+  font-size: large;
+  font-weight: 500;
+  font-family: system-ui;
+  color: #b468c0;
 }
 
 .user-list li:nth-child(n + 2) {
@@ -104,22 +104,22 @@ body {
 }
 
 .user-list li:hover {
-  background-color: #fae3d7;
+  background-color: #bde0fe;
   transform: scale(1.02);
 }
 
-/* Styles for the chat area */
 .chat-area {
   display: flex;
   flex-direction: column;
   width: 70%;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #fff8f0;
+  background-color: #e1eff6;
   transition: all 0.3s ease;
   opacity: 0;
   transform: translateX(20px);
   animation: slideInRight 0.5s ease-out 0.2s forwards;
+  box-sizing: border-box;
 }
 
 @keyframes slideInRight {
@@ -128,42 +128,69 @@ body {
     opacity: 1;
   }
 }
-.logout{}
-.logout button{
-   background: no-repeat;
-    font-size: 25px;
-    font-family: -webkit-body;
-    font-weight: bold;
+.logout {
 }
-button{
-    background-color: none;
+.logout button {
+  background: no-repeat;
+  font-size: 25px;
+  font-family: -webkit-body;
+  font-weight: bold;
 }
-.sent
-{
- text-align: left;
-    padding: 5px 16px;
-    border-radius: 20px;
-    color: #701fb8;
-    background: #97d08c6e;
-  
-    width: max-content;
-  }
-.received{
+button {
+  background-color: none;
+}
+.sent {
   text-align: left;
-    padding:5px 16px;
-    border-radius: 20px;
-    color: white;
-    background: #b08cd0;
-    width: max-content;
+  padding: 5px 16px;
+  border-radius: 20px;
+  color: white;
+  background: #ffb0b0;
+  width: auto;
 }
-.sent-message{
-    margin-left: 76%;
-    width: max-content;
-
+.received {
+  text-align: left;
+  padding: 5px 16px;
+  border-radius: 20px;
+  color: white;
+  background: #b08cd0;
+  width: max-content;
 }
-.received-message{
+.sent-message {
+  margin-left: auto;
+  width: max-content;
+}
+.received-message {
   margin-right: 80%;
 }
-.received-time{
-  
+.received-time {
+}
+
+.search-icon {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #4d4d4d;
+  padding: 5px 10px;
+  margin-bottom: -8px;
+}
+
+.search-input {
+  margin-top: 10px;
+  padding: 5px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #f4acb7;
+}
+.search {
+  display: flex;
+  flex-flow: row-reverse;
+  justify-content: center;
+}
+.allchat {
 }

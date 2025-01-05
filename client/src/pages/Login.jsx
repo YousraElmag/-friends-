@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 import jj from "../assets/jj.jpg";
@@ -17,7 +17,7 @@ const AuthPage = () => {
 
   const { setAuthUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -30,9 +30,7 @@ const AuthPage = () => {
     if (isLogin && !validateLoginInputs(inputs)) return;
 
     setLoading(true);
-    const url = isLogin
-      ? '/api/auth/login'
-      : '/api/auth/signup';
+    const url = isLogin ? "/api/auth/login" : "/api/auth/signup";
 
     const body = isLogin
       ? { name: inputs.name, password: inputs.password }
@@ -51,11 +49,10 @@ const AuthPage = () => {
       }
 
       localStorage.setItem("chat-user", JSON.stringify(data));
-    
+
       toast.success(`${isLogin ? "Login" : "Signup"} successful!`);
 
-      // Redirect to the home page (where the sidebar will be)
-      navigate("/home"); // Redirect to /home after successful login/signup
+      navigate("/home");
     } catch (error) {
       toast.error(error.message);
     } finally {

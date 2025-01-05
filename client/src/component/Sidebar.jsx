@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ChatComponent from "./chat";
 import "../style/home.css";
-
+import aa from "../assets/aa.jpg";
 const ChatApp = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showSearch, setShowSearch] = useState(false);
 
   const uss = JSON.parse(localStorage.getItem("chat-user"));
   const currentUser = uss ? uss._id : null;
@@ -15,7 +17,9 @@ const ChatApp = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("/api/auth/users");
+        const response = await axios.get(`/api/auth/users?query=${search}`, {
+          params: { currentUserId: currentUser },
+        });
         setUsers(response.data);
       } catch (error) {
         setError("Error fetching users: " + error.message);
@@ -25,7 +29,11 @@ const ChatApp = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [search, currentUser]);
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
+  };
 
   if (loading) {
     return <div className="loading">Loading users...</div>;
@@ -38,7 +46,22 @@ const ChatApp = () => {
   return (
     <div className="chat-app">
       <div className="user-list">
-        <h3>User List</h3>
+        <h3>Friends ❤️</h3>
+        <div className="search">
+          <button onClick={toggleSearch} className="search-icon">
+            🔍
+          </button>
+          {showSearch && (
+            <input
+              type="text"
+              placeholder="Search users..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="search-input"
+            />
+          )}
+        </div>
+
         <ul>
           {users.map(({ _id, name, image }) => (
             <li
@@ -65,7 +88,25 @@ const ChatApp = () => {
             currentUser={currentUser}
           />
         ) : (
-          <div className="select-user">Select a user to chat</div>
+          <div
+            style={{
+              backgroundImage: `url(${aa})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              height: "100%",
+              width: "100%",
+              color: "white",
+              display: "flex",
+              justifyContent: "center",
+              fontFamily: '"Playwrite GB S", sans-serif',
+              paddingTop: "19px",
+              fontWeight: "bolder",
+              fontSize: "large",
+            }}
+            className="select-user"
+          >
+            Who's on your mind? Select them to chat"
+          </div>
         )}
       </div>
     </div>
