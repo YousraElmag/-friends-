@@ -2,10 +2,10 @@
 ### Live-demo https://frinds-1imb.onrender.com/
 
 <div align="center">
-  <img src="client/src/assets/11.png" alt="Screenshot 1" width="400" style="margin: 10px;" />
-  <img src="client/src/assets/1.png" alt="Screenshot 2" width="400" style="margin: 10px;" />
-  <img src="client/src/assets/2.png" alt="Screenshot 3" width="400" style="margin: 10px;" />
-  <img src="client/src/assets/3.png" alt="Screenshot 4" width="400" style="margin: 10px;" />
+  <img src="client/src/assets/11.png" alt="Screenshot 1" />
+  <img src="client/src/assets/1.png" alt="Screenshot 2" />
+  <img src="client/src/assets/2.png" alt="Screenshot 3"  />
+  <img src="client/src/assets/3.png" alt="Screenshot 4"  />
 </div>
 ## Overview
 
