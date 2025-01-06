@@ -28,7 +28,13 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     fetchMessages();
-   
+    const intervalId = setInterval(() => {
+      fetchMessages();
+    }, 6000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [currentUser, selectedUser]);
 
   useEffect(() => {
