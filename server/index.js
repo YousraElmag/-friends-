@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
-import { createServer } from "http"; 
-import { Server } from "socket.io"; 
+import { createServer } from "http";
+import { Server } from "socket.io";
 import router from "./routes/authRoutes.js";
 import routerchat from "./routes/chat.js";
 
@@ -34,38 +34,38 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
 const httpServer = createServer(app);
-
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173", 
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
 
-
 io.on("connection", (socket) => {
- 
+  console.log("A user connected");
+
   socket.on("joinRoom", (userId) => {
     socket.join(userId);
-  
+    console.log(`User ${userId} joined room`);
   });
 
   socket.on("sendMessage", async (message) => {
     try {
       io.to(message.receiverId).emit("receiveMessage", message);
+      console.log("Message sent:", message);
     } catch (error) {
       console.error("Error sending message:", error.message);
     }
   });
+
   socket.on("disconnect", () => {
-  
+    console.log("A user disconnected");
   });
 });
 
-// تشغيل الخادم
+// Start the server
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.DB_URI);
