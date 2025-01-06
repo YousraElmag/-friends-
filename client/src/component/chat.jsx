@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import EmojiPicker from "emoji-picker-react";
+import io from "socket.io-client";
+
+const socket = io();
 
 const ChatComponent = ({ selectedUser, currentUser }) => {
   const [messages, setMessages] = useState([]);
@@ -41,6 +44,16 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    socket.on("receiveMessage", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.off("receiveMessage");
+    };
+  }, []);
+
   const sendMessage = async () => {
     if (!newMessage.trim()) {
       console.error("Cannot send an empty message");
@@ -55,8 +68,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
 
     try {
       await axios.post("/api/chat/messages", messageData);
-
-      setMessages((prevMessages) => [...prevMessages, messageData]);
+      socket.emit("sendMessage", messageData);
       setNewMessage("");
     } catch (error) {
       console.error("Error sending message:", error.message);
@@ -136,7 +148,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
             border: "none",
             fontSize: "20px",
             cursor: "pointer",
-           
           }}
         >
           😊
