@@ -1,8 +1,10 @@
-# FRIENDS 
-![screen shot](client/src/assets/11.png)
-![screen shot](client/src/assets/1.png)
-![screen shot](assets/2.png)
-![screen shot](client/src/assets/3.png)
+*Friends
+<div align="center">
+  <img src="client/src/assets/11.png" alt="Screenshot 1" width="400" style="margin: 10px;" />
+  <img src="client/src/assets/1.png" alt="Screenshot 2" width="400" style="margin: 10px;" />
+  <img src="client/src/assets/2.png" alt="Screenshot 3" width="400" style="margin: 10px;" />
+  <img src="client/src/assets/3.png" alt="Screenshot 4" width="400" style="margin: 10px;" />
+</div>
 ## Overview
 
 The Frindes is a real-time messaging application built using React for the frontend and Express.js with MongoDB for the backend. The app allows users to chat with their friends, search for users, and manage authentication. It also includes features like emoji support, real-time updates, and user-friendly UI.
