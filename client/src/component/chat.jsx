@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import EmojiPicker from "emoji-picker-react";
-import io from "socket.io-client";
-
-const socket = io();
 
 const ChatComponent = ({ selectedUser, currentUser }) => {
   const [messages, setMessages] = useState([]);
@@ -27,7 +24,14 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
       }
     };
 
-    fetchMessages(); // Fetch messages only once when the component mounts
+    fetchMessages();
+    const intervalId = setInterval(() => {
+      fetchMessages();
+    }, 6000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [currentUser, selectedUser]);
 
   useEffect(() => {
@@ -36,16 +40,6 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
         chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
-
-  useEffect(() => {
-    socket.on("receiveMessage", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    return () => {
-      socket.off("receiveMessage");
-    };
-  }, []);
 
   const sendMessage = async () => {
     if (!newMessage.trim()) {
@@ -61,7 +55,8 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
 
     try {
       await axios.post("/api/chat/messages", messageData);
-      socket.emit("sendMessage", messageData);
+
+      setMessages((prevMessages) => [...prevMessages, messageData]);
       setNewMessage("");
     } catch (error) {
       console.error("Error sending message:", error.message);
@@ -141,6 +136,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
             border: "none",
             fontSize: "20px",
             cursor: "pointer",
+           
           }}
         >
           😊

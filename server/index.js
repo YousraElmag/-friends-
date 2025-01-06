@@ -3,8 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
-import { createServer } from "http";
-import { Server } from "socket.io";
 import router from "./routes/authRoutes.js";
 import routerchat from "./routes/chat.js";
 
@@ -19,11 +17,9 @@ if (!process.env.DB_URI) {
   process.exit(1);
 }
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/auth", router);
 app.use("/api/chat", routerchat);
 
@@ -34,44 +30,12 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const httpServer = createServer(app);
-
-const io = new Server(httpServer, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("A user connected");
-
-  socket.on("joinRoom", (userId) => {
-    socket.join(userId);
-    console.log(`User ${userId} joined room`);
-  });
-
-  socket.on("sendMessage", async (message) => {
-    try {
-      io.to(message.receiverId).emit("receiveMessage", message);
-      console.log("Message sent:", message);
-    } catch (error) {
-      console.error("Error sending message:", error.message);
-    }
-  });
-
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-});
-
-// Start the server
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.DB_URI);
     console.log("Connected to MongoDB");
 
-    httpServer.listen(port, () => {
+    app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
     });
   } catch (err) {
