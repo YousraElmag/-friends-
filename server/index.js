@@ -19,15 +19,16 @@ if (!process.env.DB_URI) {
 
 app.use(cors({
   origin: [
-    "http://localhost:5173",               
-    'https://friends-snowy.vercel.app'    
+    "http://localhost:5173",
+    "https://frinds-1imb.onrender.com"  // اضف هذا
   ],
-  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.options("*", cors());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
