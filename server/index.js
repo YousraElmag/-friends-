@@ -16,11 +16,11 @@ if (!process.env.DB_URI) {
   console.error("Missing DB_URI in environment variables");
   process.exit(1);
 }
-
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://frinds-1imb.onrender.com"  // اضف هذا
+    "https://frinds-1imb.onrender.com",
+    "https://friends-snowy.vercel.app"  
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
