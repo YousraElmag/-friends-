@@ -17,7 +17,7 @@ const ChatApp = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`/api/auth/users?query=${search}`, {
+        const response = await axios.get(`https://friends-1-7d7s.onrender.com/api/auth/users?query=${search}`, {
           params: { currentUserId: currentUser },
         });
         setUsers(response.data);

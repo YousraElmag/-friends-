@@ -54,7 +54,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     try {
-      await axios.post("/api/chat/messages", messageData);
+      await axios.post("https://friends-1-7d7s.onrender.com/api/chat/messages", messageData);
 
       setMessages((prevMessages) => [...prevMessages, messageData]);
       setNewMessage("");
