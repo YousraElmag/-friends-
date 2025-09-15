@@ -14,7 +14,7 @@ export default function Register() {
         e.preventDefault()
         const {name, email, password}=data;
         try{
-        const {data}=await axios.post('https://friends-1-7d7s.onrender.com/register',{
+        const {data}=await axios.post('https://friends-r1o0.onrender.com/register',{
           name,
           email,
           password

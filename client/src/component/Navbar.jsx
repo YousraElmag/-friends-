@@ -12,7 +12,7 @@ const Logout = () => {
     setError(null);
 
     try {
-      const response = await axios.post("https://friends-1-7d7s.onrender.com/api/auth/logout");
+      const response = await axios.post("https://friends-r1o0.onrender.com/api/auth/logout");
       console.log(response.data.message);
       localStorage.removeItem("chat-user");
       navigate("/login");

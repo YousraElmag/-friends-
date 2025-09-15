@@ -15,7 +15,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
       if (currentUser && selectedUser) {
         try {
           const response = await axios.get(
-            `https://friends-1-7d7s.onrender.com/api/chat/messages/${uss._id}/${selectedUser._id}`
+            `https://friends-r1o0.onrender.com/api/chat/messages/${uss._id}/${selectedUser._id}`
           );
           setMessages(response.data);
         } catch (error) {
@@ -54,7 +54,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
     };
 
     try {
-      await axios.post("https://friends-1-7d7s.onrender.com/api/chat/messages", messageData);
+      await axios.post("https://friends-r1o0.onrender.com/api/chat/messages", messageData);
 
       setMessages((prevMessages) => [...prevMessages, messageData]);
       setNewMessage("");
