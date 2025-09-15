@@ -19,15 +19,19 @@ if (!process.env.DB_URI) {
 
 
 app.use(express.json());
-app.use(cors());
 
 
+
+
+const cors = require("cors");
 
 app.use(cors({
   origin: "https://friends-780q02e6t-yousraelmags-projects.vercel.app",
   methods: ["GET","POST","PUT","DELETE"],
   credentials: true
 }));
+
+app.use(express.json());
 
 app.use("/api/auth", router);
 app.use("/api/chat", routerchat);
