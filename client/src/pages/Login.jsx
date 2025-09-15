@@ -30,7 +30,7 @@ const AuthPage = () => {
     if (isLogin && !validateLoginInputs(inputs)) return;
 
     setLoading(true);
-    const url = isLogin ? "https://friends-1-7d7s.onrender.com/api/auth/login" : "https://friends-1-7d7s.onrender.com/api/auth/signup";
+    const url = isLogin ? "https://friends-r1o0.onrender.com/api/auth/login" : "https://friends-r1o0.onrender.com/api/auth/signup";
 
     const body = isLogin
       ? { name: inputs.name, password: inputs.password }
