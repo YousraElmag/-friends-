@@ -26,7 +26,7 @@ app.use(express.json());
 const cors = require("cors");
 
 app.use(cors({
-  origin: "https://friends-780q02e6t-yousraelmags-projects.vercel.app",
+  origin: "https://friends-snowy.vercel.app/",
   methods: ["GET","POST","PUT","DELETE"],
   credentials: true
 }));
