@@ -18,10 +18,11 @@ if (!process.env.DB_URI) {
 }
 
 app.use(cors({
-  origin: "https://friends-snowy.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  origin: [
+    "http://localhost:5173",               
+    'https://friends-snowy.vercel.app'    
+  ],
+  credentials: true,
 }));
 
 app.use(express.json());
