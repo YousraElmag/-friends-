@@ -15,7 +15,7 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
       if (currentUser && selectedUser) {
         try {
           const response = await axios.get(
-            `/api/chat/messages/${uss._id}/${selectedUser._id}`
+            `https://friends-1-7d7s.onrender.com/api/chat/messages/${uss._id}/${selectedUser._id}`
           );
           setMessages(response.data);
         } catch (error) {
