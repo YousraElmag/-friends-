@@ -17,8 +17,17 @@ if (!process.env.DB_URI) {
   process.exit(1);
 }
 
-app.use(cors());
+
 app.use(express.json());
+app.use(cors());
+
+
+
+app.use(cors({
+  origin: "https://friends-780q02e6t-yousraelmags-projects.vercel.app",
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: true
+}));
 
 app.use("/api/auth", router);
 app.use("/api/chat", routerchat);
