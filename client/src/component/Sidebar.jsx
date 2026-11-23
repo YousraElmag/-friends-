@@ -3,6 +3,7 @@ import axios from "axios";
 import ChatComponent from "./chat";
 import "../style/home.css";
 import aa from "../assets/aa.jpg";
+import { getAvatar, handleAvatarError } from "../utils/avatar";
 const ChatApp = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -74,7 +75,8 @@ const ChatApp = () => {
               }`}
             >
               <img
-                src={image || "default-image-url.jpg"}
+                src={getAvatar({ name, image })}
+                onError={handleAvatarError(name)}
                 alt={name}
                 className="user-avatar"
               />

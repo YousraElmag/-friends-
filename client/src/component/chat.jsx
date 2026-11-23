@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import EmojiPicker from "emoji-picker-react";
+import { getAvatar, handleAvatarError } from "../utils/avatar";
 
 const ChatComponent = ({ selectedUser, currentUser }) => {
   const [messages, setMessages] = useState([]);
@@ -104,7 +105,10 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
             }}
           >
             <img
-              src={msg.senderId === uss._id ? uss.image : selectedUser.image}
+              src={getAvatar(msg.senderId === uss._id ? uss : selectedUser)}
+              onError={handleAvatarError(
+                msg.senderId === uss._id ? uss.name : selectedUser.name
+              )}
               alt="User Avatar"
               style={{
                 width: "30px",

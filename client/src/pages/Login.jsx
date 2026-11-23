@@ -39,9 +39,13 @@ const AuthPage = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        // Stop waiting after 60 seconds instead of showing "Loading..." forever
+        signal: AbortSignal.timeout(60000),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({
+        error: `Server error (${res.status}). Please try again later.`,
+      }));
       if (data.error) {
         throw new Error(data.error);
       }
@@ -52,7 +56,11 @@ const AuthPage = () => {
 
       navigate("/home");
     } catch (error) {
-      toast.error(error.message);
+      if (error.name === "TimeoutError") {
+        toast.error("The server is not responding. Please try again in a minute.");
+      } else {
+        toast.error(error.message);
+      }
     } finally {
       setLoading(false);
     }

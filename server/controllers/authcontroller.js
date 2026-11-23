@@ -32,8 +32,8 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-		const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${name}`;
-    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${name}`;
+    // The old avatar service (avatar.iran.liara.run) is down, so use DiceBear
+    const profilePic = `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(name)}`;
 
 
     const newUser = new User({
@@ -41,7 +41,7 @@ export const signup = async (req, res) => {
       name,
       password: hashedPassword,
       gender,
-      image:gender==='male'?boyProfilePic:girlProfilePic,
+      image: profilePic,
     });
 
     await newUser.save();
