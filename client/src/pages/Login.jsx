@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuthContext } from "../context/AuthContext";
 import jj from "../assets/we.jpg";
 import "../style/Login.css";
 
@@ -15,7 +14,6 @@ const AuthPage = () => {
     gender: "",
   });
 
-  const { setAuthUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 

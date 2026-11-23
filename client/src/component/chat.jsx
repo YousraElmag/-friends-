@@ -52,14 +52,18 @@ const ChatComponent = ({ selectedUser, currentUser }) => {
       receiverId: selectedUser._id,
       content: newMessage,
     };
+    setNewMessage("");
 
     try {
       await axios.post("https://friends-r1o0.onrender.com/api/chat/messages", messageData);
 
-      setMessages((prevMessages) => [...prevMessages, messageData]);
-      setNewMessage("");
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { ...messageData, createdAt: new Date().toISOString() },
+      ]);
     } catch (error) {
       console.error("Error sending message:", error.message);
+      setNewMessage(messageData.content); // give the text back so it is not lost
     }
   };
 

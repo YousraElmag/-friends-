@@ -3,7 +3,9 @@ import Message from "../model/message.js";
 import CryptoJS from "crypto-js";
 
 const routerchat = express.Router();
-const ENCRYPTION_SECRET = "your_secret_key"; // Replace with your secure key
+// Set MESSAGE_SECRET in .env. The fallback keeps old messages readable,
+// but changing the key makes messages encrypted with the old key unreadable.
+const ENCRYPTION_SECRET = process.env.MESSAGE_SECRET || "your_secret_key";
 
 // Utility functions for encryption and decryption
 const encryptMessage = (message) => {

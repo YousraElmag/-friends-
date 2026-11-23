@@ -11,14 +11,16 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 router.get("/users", async (req, res) => {
-  const { query, currentUserId } = req.query;
+  const { query = "", currentUserId } = req.query;
 
   try {
     let users;
+    // Escape special regex characters so user input is matched literally
+    const safeQuery = String(query).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const queryFilter = {
       $or: [
-        { name: { $regex: query, $options: "i" } },
-        { email: { $regex: query, $options: "i" } },
+        { name: { $regex: safeQuery, $options: "i" } },
+        { email: { $regex: safeQuery, $options: "i" } },
       ],
     };
 
@@ -26,15 +28,17 @@ router.get("/users", async (req, res) => {
       users = await User.find({
         ...queryFilter,
         _id: { $ne: currentUserId },
-      }).limit(4);
+      })
+        .select("-password")
+        .limit(4);
     } else {
-      users = await User.find(queryFilter);
+      users = await User.find(queryFilter).select("-password").limit(4);
     }
 
     res.json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
-    res.status(500).json({ message: "Error fetching users", error });
+    res.status(500).json({ error: "Error fetching users" });
   }
 });
 

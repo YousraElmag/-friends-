@@ -17,10 +17,12 @@ const ChatApp = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`https://friends-r1o0.onrender.com/api/auth/users?query=${search}`, {
-          params: { currentUserId: currentUser },
-        });
+        const response = await axios.get(
+          "https://friends-r1o0.onrender.com/api/auth/users",
+          { params: { query: search, currentUserId: currentUser } }
+        );
         setUsers(response.data);
+        setError(null);
       } catch (error) {
         setError("Error fetching users: " + error.message);
       } finally {
@@ -105,7 +107,7 @@ const ChatApp = () => {
             }}
             className="select-user"
           >
-            Who's on your mind? Select them to chat"
+            Who&apos;s on your mind? Select them to chat
           </div>
         )}
       </div>

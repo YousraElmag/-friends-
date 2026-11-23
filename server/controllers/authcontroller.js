@@ -7,12 +7,22 @@ export const signup = async (req, res) => {
   try {
     const { email, name, password, confirmPassword, gender } = req.body;
 
-    if (!email || !name || !password || !confirmPassword ) {
+    if (!email || !name || !password || !confirmPassword || !gender) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords don't match" });
+    }
+
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "Password must be at least 6 characters" });
+    }
+
+    if (!["male", "female"].includes(gender)) {
+      return res.status(400).json({ error: "Invalid gender" });
     }
 
     const existingUser = await User.findOne({ $or: [{ name }, { email }] });
@@ -45,6 +55,10 @@ export const signup = async (req, res) => {
       image:newUser.image,
     });
   } catch (error) {
+    if (error.name === "ValidationError") {
+      const message = Object.values(error.errors)[0].message;
+      return res.status(400).json({ error: message });
+    }
     console.log("Error in signup controller:", error.message);
     res.status(500).json({ error: "Something went wrong" });
   }
