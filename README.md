@@ -1,5 +1,5 @@
 ## Friends
-### Live-demo https://frinds-1imb.onrender.com/](https://friends-snowy.vercel.app/
+### Live-demo https://friends-snowy.vercel.app/
 
 <div align="center">
   <img src="client/src/assets/11.png" alt="Screenshot 1" />
